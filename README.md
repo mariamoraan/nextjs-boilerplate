@@ -333,4 +333,4 @@ For vulnerabilities that require a major bump, evaluate them manually before for
 
 ## License
 
-Private project — Materact.
+Private project — Maria Moran Luaces.
