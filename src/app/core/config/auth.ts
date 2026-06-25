@@ -9,6 +9,7 @@ import { db } from "@/core/lib/db";
 import { verifyCredentials } from "@/core/lib/verify-credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   adapter: PrismaAdapter(db),
   providers: [
     Google({

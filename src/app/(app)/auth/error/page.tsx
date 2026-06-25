@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { siteConfig } from "@/core/config/site";
 
+import styles from "./page.module.scss";
+
 const ERROR_MESSAGES: Record<string, string> = {
   AccessDenied:
     "Your email is not authorized to access this application. If you believe this is a mistake, contact an administrator.",
@@ -20,13 +22,13 @@ export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps
     : ERROR_MESSAGES.Default;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12 dark:bg-zinc-950">
-      <div className="w-full max-w-sm">
-        <div className="rounded-2xl border border-zinc-200 bg-white p-6 text-center shadow-sm sm:p-8 dark:border-zinc-800 dark:bg-zinc-900">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-950">
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <div className={styles.iconWrapper}>
             <svg
               aria-hidden="true"
-              className="h-6 w-6 text-red-600 dark:text-red-400"
+              className={styles.icon}
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -40,21 +42,14 @@ export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps
             </svg>
           </div>
 
-          <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-            Sign in failed
-          </h1>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            {message}
-          </p>
+          <h1 className={styles.title}>Sign in failed</h1>
+          <p className={styles.message}>{message}</p>
 
-          <Link
-            href="/login"
-            className="mt-8 inline-flex h-10 items-center justify-center rounded-lg bg-zinc-900 px-6 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-          >
+          <Link href="/login" className={styles.link}>
             Back to sign in
           </Link>
 
-          <p className="mt-6 text-xs text-zinc-500">{siteConfig.name}</p>
+          <p className={styles.footer}>{siteConfig.name}</p>
         </div>
       </div>
     </div>

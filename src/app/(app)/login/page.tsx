@@ -8,6 +8,7 @@ import {
   loginWithGitHub,
   loginWithGoogle,
 } from "./actions";
+import styles from "./page.module.scss";
 
 const ERROR_MESSAGES: Record<string, string> = {
   AccessDenied:
@@ -21,7 +22,7 @@ function GitHubIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="h-5 w-5"
+      className={styles.icon}
       fill="currentColor"
       viewBox="0 0 24 24"
     >
@@ -36,7 +37,7 @@ function GitHubIcon() {
 
 function GoogleIcon() {
   return (
-    <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24">
+    <svg aria-hidden="true" className={styles.icon} viewBox="0 0 24 24">
       <path
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
         fill="#4285F4"
@@ -57,9 +58,6 @@ function GoogleIcon() {
   );
 }
 
-const inputClassName =
-  "h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-zinc-500 dark:focus:ring-zinc-800";
-
 type LoginPageProps = {
   searchParams: Promise<{ error?: string }>;
 };
@@ -74,33 +72,25 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     : null;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12 dark:bg-zinc-950">
-      <div className="w-full max-w-sm">
-        <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8 dark:border-zinc-800 dark:bg-zinc-900">
-          <div className="mb-8 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-              {siteConfig.name}
-            </h1>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <div className={styles.header}>
+            <h1 className={styles.heading}>{siteConfig.name}</h1>
+            <p className={styles.subheading}>
               Sign in to continue to your dashboard
             </p>
           </div>
 
           {errorMessage && (
-            <div
-              className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950 dark:text-red-200"
-              role="alert"
-            >
+            <div className={styles.alert} role="alert">
               {errorMessage}
             </div>
           )}
 
-          <form action={loginWithCredentials} className="space-y-4">
-            <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
-              >
+          <form action={loginWithCredentials} className={styles.form}>
+            <div className={styles.field}>
+              <label htmlFor="email" className={styles.label}>
                 Email
               </label>
               <input
@@ -109,16 +99,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 type="email"
                 autoComplete="email"
                 required
-                className={inputClassName}
+                className={styles.input}
                 placeholder="you@example.com"
               />
             </div>
 
-            <div className="space-y-2">
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
-              >
+            <div className={styles.field}>
+              <label htmlFor="password" className={styles.label}>
                 Password
               </label>
               <input
@@ -127,53 +114,40 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 type="password"
                 autoComplete="current-password"
                 required
-                className={inputClassName}
+                className={styles.input}
                 placeholder="••••••••"
               />
             </div>
 
-            <button
-              type="submit"
-              className="flex h-11 w-full items-center justify-center rounded-lg bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-            >
+            <button type="submit" className={styles.primaryButton}>
               Sign in
             </button>
           </form>
 
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-zinc-200 dark:border-zinc-800" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-zinc-500 dark:bg-zinc-900 dark:text-zinc-500">
-                Or continue with
-              </span>
+          <div className={styles.divider}>
+            <div className={styles.dividerLine} />
+            <div className={styles.dividerLabel}>
+              <span>Or continue with</span>
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className={styles.oauthButtons}>
             <form action={loginWithGitHub}>
-              <button
-                type="submit"
-                className="flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-4 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50 dark:hover:bg-zinc-900"
-              >
+              <button type="submit" className={styles.oauthButton}>
                 <GitHubIcon />
                 Continue with GitHub
               </button>
             </form>
 
             <form action={loginWithGoogle}>
-              <button
-                type="submit"
-                className="flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-4 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50 dark:hover:bg-zinc-900"
-              >
+              <button type="submit" className={styles.oauthButton}>
                 <GoogleIcon />
                 Continue with Google
               </button>
             </form>
           </div>
 
-          <p className="mt-6 text-center text-xs text-zinc-500 dark:text-zinc-500">
+          <p className={styles.footer}>
             Access is restricted to authorized users only.
           </p>
         </div>
